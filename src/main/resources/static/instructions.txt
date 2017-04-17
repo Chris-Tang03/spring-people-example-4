@@ -1,0 +1,71 @@
+1) Add jdbc in application.properties
+2) create/add arguments to controller
+3) add search value into model
+4) edit the link tags in index.html and personForm.html by adding th:href to point CSS folder correctly
+        th:href=“@{/styles.css}” or similar
+5) Edit the nav tag with href to link to dynamic pages
+6) index.html - Add th:value in <form action> to keep the value typed in for search assigned in Controller
+       1. Add th:action=“@{/}” to route to dynamic home page
+
+
+----
+Create person class with properties, constructors and getters/setters for:
+    personId
+    title
+    firstName
+    middleName
+    lastName
+    suffix
+
+-----
+1) Create a repository for people with public List<> of Person class
+    a) for now, return null
+    b) add a search argument to your repo's list people and add "people" model
+    c) @Autowire the repository into the controller
+        --- Model "people"
+    d) write your jdbcTemplate.query
+        SQL statement that selects a person by their first/last name and LIMIT to x-people)
+        don't forget about lower case!!
+        don't forget about params!!
+    make an object array that contains your params (search)
+    write a lambda to turn result set into a person
+         a) use (rs, i) -> new Person( .... ) to create a new instance of person in parameterized query
+
+2) add the like operator
+3) add the percents to the query params
+4) set the default value of the search argument
+
+
+-----
+1) add count of people to the span in index.html
+2) hide the bottom three rows using the th:remove
+3) use th:each to iterate over the people
+4) for each person, show the correct first and last names
+5) for each person, set their edit link to be:
+        /personForm?personId=<the person's id>
+
+        this link can be built using this pattern:
+        @{'/somepath?somevariablename=' + ${someVariable.getSomething()}}
+
+----
+2) add person using personId into the model in the controller using the repo
+3) add a dummy div somewhere in personForm to show search results
+        <div th:text="${...}"></div>
+1) add params to controller for personId and model (While creating a getPersonId class)
+2) if person id is null, add a new person to the model. Otherwise, query for the specified person by personid
+3) create a method on the repo that queries for a single user.
+4) update thymeleaf template to show that, yes, you got a person.
+5) you may need to update your Person class. I did. Do you remember why?
+
+----
+1) put person data into the form using th:object and *{}
+2) update th:action on form to a new dynamic link (to save a person)
+3) add controller post method (save person)
+3.5) redirect to webroot
+4) add argument to controller's new method to receive the person
+5) print that person to the console.
+
+----
+1) created a method to save a person on my repository by adding it into Controller without Model
+2) based on the person's ID I either inserted or updated the person
+    - I used the jdbcTemplate's update method.

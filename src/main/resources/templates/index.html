@@ -1,33 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
     <title>People List</title>
 
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" />
 
-    <link rel="stylesheet" href="../static/css/styles.css" />
+    <link rel="stylesheet" href="../static/css/styles.css" th:href="@{/css/styles.css}" />
 </head>
 <body>
 
 <nav>
     <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="personForm.html">Add Person</a></li>
+        <li><a href="index.html" th:href="@{/}">Home</a></li>
+        <li><a href="personForm.html" th:href="@{/personForm}">Add Person</a></li>
     </ul>
 </nav>
 
 <h1>People List</h1>
 
-<form action="index.html" method="get">
+<form action="index.html" th:action="@{/}" method="get">
     <label>
         <span>Search:</span>
-        <input type="text" name="search" value="" />
+        <input type="text" name="search" value="" th:value="${search}"/>
     </label>
     <button>Search</button>
 </form>
 
-<p>Showing <span>4</span> people. Click on a header to sort.</p>
+<p>Showing <span th:text="${people.size()}">4</span> people. Click on a header to sort.</p>
 
 <table>
     <tr>
@@ -41,22 +41,22 @@
             Action
         </th>
     </tr>
-    <tr>
-        <td>Cosmo</td>
-        <td>Harper</td>
-        <td><a href="personForm.html">Edit</a></td>
+    <tr th:each="person : ${people}">
+        <td th:text="${person.getFirstName()}">Cosmo</td>
+        <td th:text="${person.getLastName()}">Harper</td>
+        <td><a href="personForm.html" th:href="@{/personForm?personId=} + ${person.getPersonId()}">Edit</a></td>
     </tr>
-    <tr>
+    <tr th:remove="all">
         <td>Raeburn</td>
         <td>Dusty</td>
         <td><a href="personForm.html">Edit</a></td>
     </tr>
-    <tr>
+    <tr th:remove="all">
         <td>Cash</td>
         <td>Blaze</td>
         <td><a href="personForm.html">Edit</a></td>
     </tr>
-    <tr>
+    <tr th:remove="all">
         <td>Kaiden</td>
         <td>Dex</td>
         <td><a href="personForm.html">Edit</a></td>

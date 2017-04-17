@@ -1,20 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <!-- todo: make this shown add or edit as appropriate -->
     <title>Add/Edit Person</title>
 
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" />
 
-    <link rel="stylesheet" href="../static/css/styles.css" />
+    <link rel="stylesheet" href="../static/css/styles.css" th:href="@{/css/styles.css}" />
 </head>
 <body>
 
 <nav>
     <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="personForm.html">Add Person</a></li>
+        <li><a href="index.html" th:href="@{/}">Home</a></li>
+        <li><a href="personForm.html" th:href="@{/personForm}">Add Person</a></li>
     </ul>
 </nav>
 
@@ -23,33 +23,35 @@
 
 <p>Use the form below to <span>add/edit</span> a person.</p>
 
-<form action="index.html" method="post">
+<div th:text="${person}">body</div>
+
+<form action="index.html" th:action="@{/savePerson}" method="post" th:object="${person}">
     <label>
         <span>Title:</span>
-        <input type="text" name="title" value="">
+        <input type="text" name="title" value="" th:value="*{title}" />
     </label>
 
     <label>
         <span>First Name:</span>
-        <input type="text" name="firstName" value="" required>
+        <input type="text" name="firstName" value="" th:value="*{firstName}" required="required" />
     </label>
 
     <label>
         <span>Middle Name:</span>
-        <input type="text" name="middleName" value="">
+        <input type="text" name="middleName" value="" th:value="*{middleName}" />
     </label>
 
     <label>
-        <span>List Name:</span>
-        <input type="text" name="lastName" value="" required>
+        <span>Last Name:</span>
+        <input type="text" name="lastName" value="" th:value="*{lastName}" required="required" />
     </label>
 
     <label>
         <span>Suffix:</span>
-        <input type="text" name="suffix" value="">
+        <input type="text" name="suffix" value="" th:value="*{suffix}" />
     </label>
 
-    <input type="hidden" name="personId" value="" />
+    <input type="hidden" name="personId" value="" th:value="*{personId}"/>
 
     <button>Save Person</button>
 </form>
