@@ -18,7 +18,7 @@ public class PeopleRepository {
                         "LOWER (firstname) LIKE (?) OR " +
                         "LOWER (lastname) LIKE (?) " +
                         "limit 100",
-                new Object[]{"%" + search + "%", "%" + search + "%"},
+                new Object[]{"%" + search.toLowerCase() + "%", "%" + search.toLowerCase() + "%"},
                 (rs, i) -> new Person(
                         rs.getInt("personid"),
                         rs.getString("title"),
@@ -48,7 +48,7 @@ public class PeopleRepository {
 
     public void savePerson(Person person) {
         if (person.getPersonId() == null) {
-            template.update("INSERT INTO (title, firstname, middlename, lastname, suffix) " +
+            template.update("INSERT INTO person (title, firstname, middlename, lastname, suffix) " +
                     "VALUES (?, ?, ?, ?, ?)",
                     new Object[]{person.getTitle(),
                     person.getFirstName(),
